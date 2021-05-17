@@ -1,0 +1,54 @@
+<% layout('layout/boilerplate') %>
+<% if(currentUser.username == employee.username) {%>
+<% let source = 'https://blog.cpanel.com/wp-content/uploads/2019/08/user-01.png' %>
+<% if(employee.gender === 'male') { source = "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png"%>
+<% }else if(employee.gender === 'female') {source = 'https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png'}%>
+<div class="container d-flex justify-content-center mt-5 mb-3">
+    <div class="card shadow" style="width: 25rem;">
+        <img src=<%=source %> class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Profile</h5>
+            <div class="mb-2">
+                <p>Employee ID - <%=employee.username%></p>
+            </div>
+            <div class="mb-2">
+                <p>First Name - <%=employee.firstName%></p>
+            </div>
+            <div class="mb-2">
+                <p>Last Name - <%=employee.lastName%></p>
+            </div>
+            <div class="mb-2">
+                <p>Mobile Number - <%=employee.mobNo%></p>
+            </div>
+            <div class="mb-2">
+                <p>Email - <%=employee.email%></p>
+            </div>
+            <div class="mb-2">
+                <p>Gender - <%=employee.gender%></p>
+            </div>
+            <div class="mb-2">
+                <%if(employee.managedby){%>
+                <p>Manager - <%=employee.managedby.firstName%> <%=employee.managedby.lastName%>
+                    (<%=employee.managedby.username%>)</p>
+                <% } else {%>
+                <p>Manager - None</p>
+                <% } %>
+            </div>
+            <div class="mb-2">
+                <p>Admin - <%=employee.isAdmin%></p>
+            </div>
+            <div class="mb-2">
+                <%if(employee.manages.length>0){%>
+                <% for(emp of employee.manages) {%>
+                <p> Manager of - <%=emp.firstName%> <%=emp.lastName%> (<%=emp.username%>)</p>
+                <% } %>
+                <% }%>
+            </div>
+
+        </div>
+        <a href="/<%=currentUser._id%>/home" class="btn btn-primary">Back</a>
+    </div>
+</div>
+</div>
+</div>
+<% } %>

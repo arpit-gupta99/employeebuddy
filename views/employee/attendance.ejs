@@ -1,0 +1,65 @@
+<% layout('layout/boilerplate') %>
+<h1>Attendance Histoy</h1>
+
+
+<div class="row">
+    <div class="col-4">
+        <form action="/<%=currentUser._id %>/attendance">
+            <div class="input-group">
+                <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon"
+                    name="eid">
+                    <% for(employee of employees) {%>
+                    <% if(employee._id == passId) {%>
+                    <option value="<%=employee._id%>" selected><%=employee.firstName%> </option>
+                    <% }else if((employee.managedby && employee.managedby.username == currentUser.username) || (currentUser.isAdmin) || (currentUser.username == employee.username))  {%>
+                    <option value="<%=employee._id%>"><%=employee.firstName%> </option>
+                    <% } %>
+                    <% } %>
+                </select>
+
+                <button class="btn btn-secondary">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br><br>
+<div style="background-color: #ffffff;">
+    <% for(employee of employees) {%>
+    <% if(employee._id == passId && ((employee.managedby && employee.managedby.username == currentUser.username) || (currentUser.isAdmin) || (currentUser.username == employee.username)) ) {%>
+    <h2 class="d-flex justify-content-center">Attendance of <%=employee.firstName %> </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">CheckIn Time</th>
+                <th scope="col">CheckOut Time</th>
+                <th scope="col">Total Time</th>
+                <th scope="col">Request</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for( attendance of employee.attendances ) {%>
+            <tr>
+                <th scope="row"><%=String(attendance.date).slice(0,15) %></th>
+                <td><%=attendance.status %></td>
+                <td><%=String(attendance.checkInTimeS).slice(0,11) %></td>
+                <td><%=String(attendance.checkOutTimeS).slice(0,11) %></td>
+                <td><%=attendance.totalTime %></td>
+                <td><%=attendance.request %></td>
+                <td> <% if(attendance.request=='Pending' && employee.managedby && employee.managedby.username == currentUser.username) {%>
+                    <form action="/<%=currentUser._id %>/approve/<%=employee._id%>/<%=attendance._id%>"
+                        class="d-inline-block"> <button class="btn-success btn ">Approve</button></form>
+                    <form action="/<%=currentUser._id %>/reject/<%=employee._id%>/<%=attendance._id%> "
+                        class="d-inline-block"> <button class="btn-danger btn ">Reject</button></form>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <% } %>
+    <% } %>
+</div>

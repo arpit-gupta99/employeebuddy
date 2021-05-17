@@ -1,0 +1,55 @@
+<% layout('layout/boilerplate') %>
+
+<% for(employee of employees) {%>
+<% let source = 'https://blog.cpanel.com/wp-content/uploads/2019/08/user-01.png' %>
+<% if(employee.gender === 'male') { source = "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png"%>
+<% }else if(employee.gender === 'female') {source = 'https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png'}%>
+<div class="card mb-3 mx-2 d-inline-block" style="width: 18rem;">
+    <img src=<%=source%> class="card-img-top">
+    <div class="card-body">
+        <h5 class="card-title mb-3"><%=employee.firstName%> <%=employee.lastName%></h5>
+        <h6 class="card-subtitle mb-1 text-muted">Employee ID - <%=employee.username%></h6>
+        <p class="card-text mb-0">Mobile Number - <%=employee.mobNo%></p>
+        <p class="card-text mb-0">Email ID - <%=employee.email%></p>
+        <%if(employee.managedby){%>
+        <p class="card-text">Manager - <%=employee.managedby.firstName%> <%=employee.managedby.lastName%>
+            (<%=employee.managedby.username%>)</p>
+        <% } else {%>
+        <p class="card-text">Manager - None</p>
+        <% } %>
+        <% if(currentUser.isAdmin) {%>
+        <form action="/<%=currentUser._id%>/edit/<%=employee._id%>" method="GET" class="mx-2 d-inline-block">
+            <button class="btn btn-primary">Edit</button>
+        </form>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+            data-bs-target="#aa<%=employee.username%>">Delete</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="aa<%=employee.username%>" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Employee ?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete <%=employee.firstName%> employee. <br>
+                        Note - Deleting employee will delete all his/her data and attenddance history.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="/<%=currentUser._id%>/edit/<%=employee._id%>?_method=DELETE" method="POST"
+                            class="mx-2 d-inline-block">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <% } %>
+    </div>
+</div>
+<% } %>

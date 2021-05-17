@@ -1,0 +1,64 @@
+<% layout('layout/boilerplate') %>
+<div class="container d-flex justify-content-center mt-5 mb-3">
+    <div class="card shadow" style="width: 25rem;">
+        <img src="https://png.pngtree.com/png-vector/20190429/ourmid/pngtree-employee-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_998315.jpg"
+            alt="" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">Enter details of new emplyee</h5>
+            <form method="POST" action="/<%=currentUser._id%>/register" class="validated-form" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Employee ID</label>
+                    <input class="form-control" type="number" id="username" name="username" value="<%=num %>" required
+                        autofocus>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input class="form-control" type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input class="form-control" type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="mobNo">Mobile Number</label>
+                    <input class="form-control" type="number" id="mobNo" name="mobNo" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gender">Gender</label>
+                    <select class="form-select" id="gender" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">Others/Do not wish to disclose</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="managedby">Select Manager</label>
+                    <select class="form-select" id="managedby" name="managedby">
+                        <option value="0" selected>None</option>
+                        <% for(employee of employees) {%>
+                        <option value="<%= employee._id%>"><%=employee.username %>, <%=employee.firstName %>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="mb-3 form-check">
+                    <input class="form-check-input" type="checkbox" name="isAdmin" id="isAdmin">
+                    <label class="form-check-label" for="isAdmin">
+                        Admin
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" required>
+                </div>
+                <div class="d-grid ">
+                    <button class="btn btn-success">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

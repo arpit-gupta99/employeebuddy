@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/<%=currentUser._id %>/profile">Welcome, <%=currentUser.firstName %> </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+            <div class="navbar-nav">
+                <a class="nav-link " aria-current="page" href="/<%=currentUser._id %>/home">Home</a>
+                <a class="nav-link" href="/directory">Employee Directory</a>
+                <a class="nav-link" href="/<%=currentUser._id %>/attendance">All Attendance</a>
+                <% if(currentUser.isAdmin) {%>
+                <a class="nav-link" href="/<%=currentUser._id %>/register">Add Employee</a>
+                <% } %>
+            </div>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/<%=currentUser._id %>/profile">Profile</a>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>

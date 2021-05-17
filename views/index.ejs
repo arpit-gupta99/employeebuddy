@@ -1,0 +1,56 @@
+<% layout('layout/boilerplate') %>
+<h1>Employee Buddy</h1>
+<div class="row">
+    <div class=" col-8 d-flex justify-content-between mb-3" style="background-color: #ffffff;">
+        <h2 class="d-inline-block m-2">Mark Attendance - </h2>
+        <form class="d-inline-block m-2" action="/<%=currentUser._id%>/checkin">
+            <button class="btn btn-success">checkin</button>
+        </form>
+        <form class="d-inline-block m-2" action="/<%=currentUser._id%>/checkout">
+            <button class="btn btn-danger">checkout</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-8 d-flex mb-3" style="background-color: #ffffff;">
+        <h2 class="d-inline-block m-2">Mark Leave - </h2>
+        <form class="d-inline-block my-2 mx-auto" action="/<%=currentUser._id%>/onleave">
+            <button class="btn btn-warning">Onleave</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="mt-3" style="background-color: #ffffff;">
+    <h1 class="d-flex justify-content-center">Attendance Histoy</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">CheckIn Time</th>
+                <th scope="col">CheckOut Time</th>
+                <th scope="col">Total Time</th>
+                <th scope="col">Request</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <% for( attendance of employee.attendances ) {%>
+            <tr>
+                <th scope="row"><%=String(attendance.date).slice(0,15) %></th>
+                <td><%=attendance.status %></td>
+                <td><%=String(attendance.checkInTimeS).slice(0,11) %></td>
+                <td><%=String(attendance.checkOutTimeS).slice(0,11) %></td>
+                <td><%=attendance.totalTime %></td>
+                <td><%=attendance.request %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
